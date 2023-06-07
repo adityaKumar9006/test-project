@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: python-script-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: python-script
+  template:
+    metadata:
+      labels:
+        app: python-script
+    spec:
+      serviceAccountName: my-svc
+      containers:
+      - name: python-script-container
+        ports:
+          - containerPort: 5001
+        image: kumaraditya9006/script:latest-v3
+        command: ["python"]
+        args: ["index.py"]
