@@ -9,17 +9,20 @@ def get_deployment_versions():
     v1 = client.AppsV1Api(api_client)
     deployment_list = v1.list_deployment_for_all_namespaces().items
     
-    # versions = []
-    # for deployment in deployment_list:
-    #     chart_version = deployment.spec.template.metadata.annotations.get('helm.sh/chart')
-    #     versions.append({'deployment': deployment.metadata.name, 'version': chart_version})
+    versions = []
+    for deployment in deployment_list:
+        metadata = deployment.metadata
+        labels=None
+        if metadata is not None:
+            labels=metadata.labels
+        versions.append(labels)
 
-    return deployment_list
+    return versions
 
 @app.route('/get-versions')
 def get_versions():
     versions = get_deployment_versions()
-    return jsonify({'versions': versions})
+    return jsonify({'versions':versions})
 
 @app.route('/echo')
 def echo():

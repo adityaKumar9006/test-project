@@ -17,6 +17,6 @@ spec:
       - name: python-script-container
         ports:
           - containerPort: 5001
-        image: kumaraditya9006/script:latest-v3
+        image: kumaraditya9006/script:latest-v7
         command: ["python"]
         args: ["index.py"]
